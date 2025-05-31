@@ -1,4 +1,5 @@
 import requests
+import os
 
 BASE_URL = "https://api.myanimelist.net/v2"
 
@@ -29,8 +30,5 @@ def get_anime_recommendations(anime_id, client_id):
         return None
     return response.json()
 
-client_id = input("Please enter your MAL API Client ID: ")
-
-results = search_anime_by_title(input("Please enter the anime you wish to search for. "), client_id)
-print(results)
-
+#results = search_anime_by_title(input("Please enter the anime you wish to search for: "), client_id)
+#print(results)
