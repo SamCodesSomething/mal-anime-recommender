@@ -6,8 +6,6 @@ load_dotenv()
 
 fake_client_id = "invalid_id"
 
-
-
 @pytest.fixture(scope="module")
 def client_id():
     cid = os.getenv("MAL_CLIENT_ID")
