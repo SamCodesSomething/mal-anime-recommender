@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Anime Search Results</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #f4f4f4; }
+        .anime { background: white; padding: 15px; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+        img { float: left; margin-right: 15px; }
+        h2 { margin-top: 0; }
+    </style>
+</head>
+<body>
+    <h1>Search Results for "{{ title }}"</h1>
+    {% if results %}
+        {% for anime in results %}
+            <div class="anime">
+                <img src="{{ anime.image }}" alt="{{ anime.title }}" width="100">
+                <h2>{{ anime.title }}</h2>
+                <p><strong>Rating:</strong> {{ anime.mean }}</p>
+                <p><strong>Genres:</strong> {{ anime.genres | join(', ') }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+</body>
+</html>
