@@ -1,11 +1,10 @@
 import requests
 import os
-import json
+from dotenv import load_dotenv
+
+load_dotenv()
 
 BASE_URL = "https://api.myanimelist.net/v2"
-
-def get_client_id():
-    return input("Please input your client id: ")
 
 def search_anime_by_title(title, client_id, limit=5):
     # title is the title of anime name, client id is the mal api client id, limit is the limit for results
@@ -22,15 +21,6 @@ def search_anime_by_title(title, client_id, limit=5):
     print(f"Response data keys: {list(data.keys())}") #prints the keys at top level of json response
     return data
 
-
-
-def get_anime_recommendations(anime_id, client_id):
-    url = f"{BASE_URL}/anime/{anime_id}/recommendations"
-    headers = {"X-MAL-CLIENT-ID": client_id}
-    response = requests.get(url, headers=headers)
-
-    if response.status_code != 200:
-        print(f"Error: {response.text}")
-        return None
-    return response.json()
-
+def get_client_id():
+    # Retrieve client ID from environment variable
+    return os.getenv("MAL_CLIENT_ID")

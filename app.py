@@ -1,11 +1,13 @@
-import os
 from app.mal_api import search_anime_by_title, get_client_id
+from fastapi import FastAPI
+
+app = FastAPI()
 
 def main():
     client_id = get_client_id()
     # getting the MAL API Client ID
     title = input("Please enter your MAL Anime Title: ")
-    # getting the title of the anime to base recommends off
+    # getting the title of the anime to base recommends offs
     result = search_anime_by_title(title, client_id)
     if result and "data" in result:
         anime_list = result["data"]
