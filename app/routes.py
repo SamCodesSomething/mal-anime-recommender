@@ -1,13 +1,12 @@
 from http.client import HTTPException
 from fastapi import FastAPI, Query, APIRouter, Request
 from fastapi.responses import HTMLResponse
-from fastapi.templating import Jinja2Templates
 from app.mal_api import search_anime_by_title, get_client_id
 router = APIRouter()
 CLIENT_ID = get_client_id()
-templates = Jinja2Templates(directory="app/templates")
-@router.get("/search-ui", summary="Search anime by title", response_description="List of anime matching the search title", response_class=HTMLResponse)
-async def search_anime_ui(
+
+@router.get("/search-text", summary="Search anime by title", response_description="List of anime matching the search title", response_class=HTMLResponse)
+async def search_anime_text(
     request: Request,
     title: str = Query(..., min_length=1, description="Title of the anime to search")
 ):
@@ -19,17 +18,12 @@ async def search_anime_ui(
     if not results or "data" not in results:
         raise HTTPException(404, "No Results Found")
 
-    formatted = []
+    lines = []
     for anime in results["data"]:
         node = anime["node"]
-        formatted.append({
-            "title": node.get("title", "N/A"),
-            "mean": node.get("mean", "N/A"),
-            "genres": [g["name"] for g in node.get("genres", [])],
-            "image": node.get("main_picture", {}).get("medium", "N/A")
-        })
+        title = node.get("title", "N/A")
+        mean = node.get("mean", "N/A")
+        genres = ', '.join(g["name"] for g in node.get("genres", []))
+        lines.append(f"Title: {title}\nRating: {mean}\nGenres: {genres}\n")
 
-    return templates.TemplateResponse("results.html", {
-        "request": request,
-        "results": formatted
-    })
+    return "\n".join(lines)
