@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from app.routes import router
+from fastapi.responses import RedirectResponse
+from app.routes import router
 app = FastAPI(
     swagger_ui_parameters={"defaultModelsExpandDepth": -2},
     title="MyAnimeList Anime Search API",
@@ -13,3 +15,7 @@ app = FastAPI(
 
 )
 app.include_router(router)
+
+@app.get("/", include_in_schema=False)
+async def root():
+    return RedirectResponse(url="/docs")
