@@ -11,12 +11,12 @@ async def search_anime_text(
     title: str = Query(..., min_length=1, description="Title of the anime to search")
 ):
     if not CLIENT_ID:
-        raise Exception("CLIENT_ID is not set")
+        raise Exception("CLIENT_ID is not set") #raises exception if client id isn't working
 
     results = search_anime_by_title(title, CLIENT_ID)
 
     if not results or "data" not in results:
-        raise HTTPException(404, "No Results Found")
+        raise HTTPException(404, "No Results Found") #raises 404 if nothing found
 
     lines = []
     for anime in results["data"]:

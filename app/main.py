@@ -17,5 +17,5 @@ app = FastAPI(
 app.include_router(router)
 
 @app.get("/", include_in_schema=False)
-async def root():
+async def root(): #redirecting to swagger UI
     return RedirectResponse(url="/docs")

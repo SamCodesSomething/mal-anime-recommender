@@ -1,6 +1,6 @@
 from app.mal_api import search_anime_by_title, get_client_id
 
-#script for testing
+#script for testing, uses the CLI to emulate a simple api call
 
 def main():
     client_id = get_client_id()
@@ -19,7 +19,7 @@ def main():
                 print(f"Main Picture: {anime['node'].get('main_picture', {}).get('medium', 'N/A')}")
                 print(f"Average rating: {anime['node'].get('mean', 'N/A')}")
                 print(f"Number of Episodes: {anime['node'].get('num_episodes', 'N/A')}")
-                genres_list = anime['node'].get('genres', []) #need to unpack genres here
+                genres_list = anime['node'].get('genres', []) #need to unpack genres
                 genre_names = [genre.get('name', 'N/A') for genre in genres_list]
                 genres_str = ", ".join(genre_names) if genre_names else "N/A"
                 print(f"Genres: {genres_str}")
