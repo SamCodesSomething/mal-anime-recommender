@@ -4,19 +4,18 @@ from app.main import app
 client = TestClient(app)
 
 def test_search_anime_success():
-    response = client.get("/search?title=Naruto")
+    response = client.get("/search?title=Naruto") # successful test call
     assert response.status_code == 200
     assert "results" in response.json()
 
 def test_search_anime_no_title():
     response = client.get("/search")  # no title param
-    assert response.status_code == 422  # validation error from FastAPI
+    assert response.status_code == 422
 
 def test_search_anime_no_result():
-    response = client.get("42718947912")
+    response = client.get("42718947912") #test for no results
     assert response.status_code == 404
 
 def test_search_anime_cowboy_bebop(): #
-    response = client.get("/search?title=Cowboy Bebop")
+    response = client.get("/search?title=Cowboy Bebop") #test to make sure it can grab cowboy bebop ;)
     assert response.status_code == 200
-    
