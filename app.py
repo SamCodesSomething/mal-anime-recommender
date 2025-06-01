@@ -1,7 +1,6 @@
 from app.mal_api import search_anime_by_title, get_client_id
-from fastapi import FastAPI
 
-app = FastAPI()
+#script for testing
 
 def main():
     client_id = get_client_id()

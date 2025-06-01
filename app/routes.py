@@ -1,17 +1,17 @@
+from http.client import HTTPException
 from fastapi import FastAPI, Query, APIRouter
-from fastapi.responses import JSONResponse
 from app.mal_api import search_anime_by_title, get_client_id
-app = FastAPI()
-
 router = APIRouter()
 CLIENT_ID = get_client_id()
 
-@router.get("/search")
-async def search_anime(title: str = Query(..., min_length=1)):
+@router.get("/search", summary="Search anime by title", response_description="List of anime matching the search title")
+async def search_anime(title: str = Query(..., min_length=1, description="Title of the anime to search")):
+    if not CLIENT_ID:
+        raise Exception("CLIENT_ID is not set")
     results = search_anime_by_title(title, CLIENT_ID)
 
     if not results or "data" not in results:
-        return JSONResponse(content={"error": "No results found"}, status_code=404)
+        raise HTTPException(404, "No Results Found")
 
     formatted = []
     for anime in results["data"]:
