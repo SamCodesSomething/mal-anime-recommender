@@ -17,5 +17,5 @@ def test_search_anime_no_result():
     assert response.status_code == 404
 
 def test_search_anime_cowboy_bebop(): #
-    response = client.get("/search?title=Cowboy Bebop") #test to make sure it can grab cowboy bebop ;)
+    response = client.get("/search?title=Cowboy Bebop")
     assert response.status_code == 200
